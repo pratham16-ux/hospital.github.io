@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Stackly Hospital & Clinic — Animations
+   Keyframes + scroll-reveal classes. Reveal states are applied by
+   js/animations.js through an IntersectionObserver.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Keyframes
+   -------------------------------------------------------------------------- */
+@keyframes ecg-draw {
+  0%   { stroke-dashoffset: 420; opacity: 1; }
+  70%  { stroke-dashoffset: 0;   opacity: 1; }
+  100% { stroke-dashoffset: 0;   opacity: 0; }
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+@keyframes blob-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-30px, 26px) scale(1.08); }
+  100% { transform: translate(24px, -18px) scale(.96); }
+}
+
+@keyframes pulse-dot {
+  0%   { box-shadow: 0 0 0 0 rgba(22, 163, 74, .45); }
+  70%  { box-shadow: 0 0 0 9px rgba(22, 163, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(220, 38, 38, .45), var(--shadow-md); }
+  70%  { box-shadow: 0 0 0 16px rgba(220, 38, 38, 0), var(--shadow-md); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0), var(--shadow-md); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
+}
+
+@keyframes gradient-pan {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --------------------------------------------------------------------------
+   Scroll reveal system
+   Elements start hidden and receive .is-inview from the observer.
+   [data-reveal]         — fade-up
+   [data-reveal="left"]  — slide from left
+   [data-reveal="right"] — slide from right
+   [data-reveal="zoom"]  — scale in
+   [data-reveal="mask"]  — clip-path curtain reveal
+   .stagger > *          — children cascade with 90ms steps
+   -------------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity .8s cubic-bezier(.22, 1, .36, 1),
+    transform .8s cubic-bezier(.22, 1, .36, 1),
+    clip-path .9s cubic-bezier(.22, 1, .36, 1);
+  will-change: opacity, transform;
+}
+[data-reveal="left"]  { transform: translateX(-36px); }
+[data-reveal="right"] { transform: translateX(36px); }
+[data-reveal="zoom"]  { transform: scale(.92); }
+[data-reveal="mask"]  {
+  transform: none;
+  clip-path: inset(0 100% 0 0 round 16px);
+}
+
+[data-reveal].is-inview {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0 round 16px);
+}
+
+/* Stagger children — delay set per-child, capped at 8 items */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s cubic-bezier(.22, 1, .36, 1), transform .7s cubic-bezier(.22, 1, .36, 1);
+}
+.stagger.is-inview > * { opacity: 1; transform: none; }
+.stagger.is-inview > *:nth-child(1) { transition-delay: .05s; }
+.stagger.is-inview > *:nth-child(2) { transition-delay: .14s; }
+.stagger.is-inview > *:nth-child(3) { transition-delay: .23s; }
+.stagger.is-inview > *:nth-child(4) { transition-delay: .32s; }
+.stagger.is-inview > *:nth-child(5) { transition-delay: .41s; }
+.stagger.is-inview > *:nth-child(6) { transition-delay: .50s; }
+.stagger.is-inview > *:nth-child(7) { transition-delay: .59s; }
+.stagger.is-inview > *:nth-child(8) { transition-delay: .68s; }
+
+/* Text reveal — headline lines slide up from behind a mask */
+.line-reveal { overflow: hidden; display: block; }
+.line-reveal > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform .9s cubic-bezier(.22, 1, .36, 1);
+}
+.line-reveal.is-inview > span,
+.is-inview .line-reveal > span { transform: none; }
+
+/* Image tilt targets (perspective set by JS) */
+[data-tilt] { transition: transform .25s ease-out; transform-style: preserve-3d; }
+
+/* Page transition veil */
+.page-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1900;
+  background: linear-gradient(120deg, var(--primary), var(--accent));
+  transform: scaleY(0);
+  transform-origin: top;
+  pointer-events: none;
+}
+.page-veil.is-leaving {
+  animation: veil-in .5s cubic-bezier(.65, 0, .35, 1) forwards;
+  pointer-events: auto;
+}
+@keyframes veil-in {
+  to { transform: scaleY(1); }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — everything settles instantly
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  html { scroll-behavior: auto; }
+  [data-reveal],
+  .stagger > *,
+  .line-reveal > span {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}

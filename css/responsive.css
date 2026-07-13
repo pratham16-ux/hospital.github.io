@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Stackly Hospital & Clinic — Responsive rules
+   Breakpoints: 1100 / 920 / 760 / 560 / 380 (fold)
+   ========================================================================== */
+
+/* ---------- ≤ 1100px : laptops / small desktops -------------------------- */
+@media (max-width: 1100px) {
+  .hero-grid { gap: 44px; }
+  .float-card--appt   { left: -12px; }
+  .float-card--rating { right: -10px; }
+  .dept-grid, .doc-grid, .pkg-grid, .article-grid { gap: 20px; }
+  .values-grid, .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .facility-grid { grid-template-columns: repeat(2, 1fr); }
+  .testi-track { grid-auto-columns: calc((100% - 26px) / 2); }
+  .counters { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+  .site-footer .top { grid-template-columns: 1fr 1fr; row-gap: 40px; }
+}
+
+/* ---------- ≤ 920px : tablets -------------------------------------------- */
+@media (max-width: 920px) {
+  .section { padding: 60px 0; }
+
+  .page-hero-grid { grid-template-columns: 1fr; gap: 52px; }
+  .page-hero__media { max-width: 540px; }
+
+  /* Navigation collapses to hamburger + full-screen panel */
+  .nav-links, .nav-shell .nav-cta { display: none; }
+  .hamburger { display: block; }
+
+  .hero { padding-top: calc(var(--header-h) + 56px); }
+  .hero-grid { grid-template-columns: 1fr; gap: 72px; }
+  .hero-lede { max-width: none; }
+  .hero-media { max-width: 560px; margin-inline: auto; }
+  .float-card--appt { left: 6px; top: 14px; }
+  .float-card--rating { right: 4px; bottom: 96px; }
+  .float-card--ecg { left: 20px; bottom: -20px; }
+
+  .overview-grid, .grid-2, .contact-grid { grid-template-columns: 1fr; gap: 56px; }
+  .auth-wrap { grid-template-columns: 1fr; }
+  .auth-side { order: 2; }
+  .overview-media { max-width: 520px; }
+  .overview-media .img-sm { right: -12px; bottom: -32px; }
+  .overview-media .years { left: -10px; top: -18px; }
+
+  .dept-grid, .article-grid { grid-template-columns: repeat(2, 1fr); }
+  .doc-grid { grid-template-columns: repeat(2, 1fr); }
+  .pkg-grid { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+
+  .cta-band { grid-template-columns: 1fr; padding: 44px 36px; }
+  .cta-band .actions { justify-self: start; }
+
+  .newsletter { grid-template-columns: 1fr; padding: 40px 32px; }
+
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+  .gallery-grid figure:nth-child(1) { grid-column: span 2; }
+  .gallery-grid figure:nth-child(4) { grid-row: span 1; }
+
+  /* Timeline flattens to a single left rail */
+  .timeline::before { left: 8px; }
+  .tl-item,
+  .tl-item:nth-child(odd),
+  .tl-item:nth-child(even) {
+    width: 100%;
+    left: 0;
+    text-align: left;
+    padding: 0 0 44px 40px;
+  }
+  .tl-item:nth-child(odd)::before,
+  .tl-item:nth-child(even)::before { left: 1px; right: auto; }
+}
+
+/* ---------- ≤ 760px : large phones ---------------------------------------- */
+@media (max-width: 760px) {
+  .container { width: calc(100% - 40px); }
+  .section { padding: 52px 0; }
+  .page-hero { padding-bottom: 52px; }
+  .section-head { margin-bottom: 40px; }
+
+  .hero h1 { font-size: clamp(32px, 9vw, 42px); }
+  .hero-stats { gap: 24px; }
+  .hero-stats .stat b { font-size: 25px; }
+
+  .dept-grid, .doc-grid, .article-grid { grid-template-columns: 1fr; }
+  .values-grid, .facility-grid, .team-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .testi-track { grid-auto-columns: 92%; }
+  .counters { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .counter b { font-size: 32px; }
+
+  .form-grid { grid-template-columns: 1fr; }
+  .newsletter form { flex-direction: column; }
+  .newsletter form .btn { width: 100%; }
+
+  .site-footer .top { grid-template-columns: 1fr; padding-block: 56px 40px; }
+  .site-footer .bottom { flex-direction: column; text-align: center; }
+
+  .modal-card { padding: 26px 22px; }
+  .contact-panel { padding: 26px 22px; }
+  .auth-form { padding: 30px 24px; }
+  .auth-side { padding: 30px 24px; }
+  .cta-band::after { display: none; }
+
+  .fab { width: 50px; height: 50px; right: 16px; }
+  .fab--wa { bottom: 84px; }
+  .to-top { left: 16px; }
+
+  .doc-toolbar { flex-direction: column; }
+  .filter-chips {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+  .filter-chips::-webkit-scrollbar { display: none; }
+  .chip { flex: none; }
+}
+
+/* ---------- ≤ 560px : phones ---------------------------------------------- */
+@media (max-width: 560px) {
+  .container { width: calc(100% - 32px); }
+
+  .site-header { top: 10px; }
+  .nav-shell { padding: 8px 8px 8px 16px; }
+  .logo__img { height: 44px; }
+  .site-header.is-shrunk .logo__img { height: 38px; }
+  .site-footer .logo__img { height: 52px; }
+
+  .hero-actions { gap: 10px; }
+  .hero-actions .btn { flex: 1 1 100%; }
+  .btn--video { flex: 0 1 auto; }
+
+  .float-card { padding: 10px 14px; }
+  .float-card b { font-size: 13.5px; }
+  .float-card--ecg svg { width: 110px; }
+  .float-card--rating { bottom: 70px; }
+
+  .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 210px; }
+  .gallery-grid figure:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+
+  .counters { grid-template-columns: 1fr; }
+  .counter { padding-left: 18px; }
+
+  .emergency-banner .container { flex-direction: column; align-items: flex-start; }
+  .cta-band { padding: 36px 24px; }
+
+  .doc-toolbar { flex-direction: column; }
+  .filter-chips { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 6px; scrollbar-width: none; }
+  .filter-chips::-webkit-scrollbar { display: none; }
+  .chip { flex: none; }
+
+  .page-hero { padding: calc(var(--header-h) + 60px) 0 52px; }
+}
+
+/* ---------- ≤ 380px : fold devices ---------------------------------------- */
+@media (max-width: 380px) {
+  .container { width: calc(100% - 24px); }
+  .hero h1 { font-size: 30px; }
+  .section-title { font-size: 25px; }
+  .btn { padding: 13px 20px; font-size: 14px; }
+  .team-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 18px 22px; }
+  .mobile-menu a { font-size: 19px; }
+}
+
+/* ---------- short landscape phones ---------------------------------------- */
+@media (max-height: 480px) and (orientation: landscape) {
+  .mobile-menu { padding-top: 90px; }
+  .mobile-menu a { padding: 10px 8px; font-size: 17px; }
+  .hero { padding-top: calc(var(--header-h) + 32px); }
+}
