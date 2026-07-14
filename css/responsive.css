@@ -1,6 +1,14 @@
 /* ==========================================================================
    Stackly Hospital & Clinic — Responsive rules
+   Part A: marketing site (style.css classes)
+   Part B: dashboard suite (dashboard.css / stylee.css classes)
+   Part C: auth screen
+   Part D: shared fixes (missing keyframes, tokens, scroll lock)
    Breakpoints: 1100 / 920 / 760 / 560 / 380 (fold)
+   ========================================================================== */
+
+/* ==========================================================================
+   PART A — Marketing site
    ========================================================================== */
 
 /* ---------- ≤ 1100px : laptops / small desktops -------------------------- */
@@ -167,4 +175,213 @@
   .mobile-menu { padding-top: 90px; }
   .mobile-menu a { padding: 10px 8px; font-size: 17px; }
   .hero { padding-top: calc(var(--header-h) + 32px); }
+}
+
+
+/* ==========================================================================
+   PART B — Dashboard suite (patient + doctor)
+   ========================================================================== */
+
+/* ---------- Grid blowout containment (ALL widths) --------------------------
+   The views are nested grids and grid items default to min-width:auto.
+   Tables use white-space:nowrap, so their min-content width (~700px)
+   inflates the grid track past the viewport — the page gets clipped by
+   html{overflow-x:clip} and .table-wrap never scrolls. min-width:0 down
+   the chain keeps every track at viewport width so the WRAPPER scrolls,
+   not the page. Harmless on desktop, essential on mobile.
+   -------------------------------------------------------------------------- */
+.main, .content, .view, .panel,
+.view > *, .chart-grid > *, .settings-grid > *, .stat-grid > * {
+  min-width: 0;
+}
+.table-wrap { max-width: 100%; }
+
+/* ---------- ≤ 1100px : charts stack, panels breathe ----------------------- */
+@media (max-width: 1100px) {
+  .chart-grid { grid-template-columns: 1fr; }
+  .chart-grid--three { grid-template-columns: 1fr 1fr; }
+  .chart-box { height: 250px; }
+}
+
+/* ---------- ≤ 920px : sidebar → slide-in drawer ---------------------------- */
+@media (max-width: 920px) {
+
+  /* App shell collapses to a single column; the sidebar detaches */
+  .app { grid-template-columns: 1fr; }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: min(var(--sidebar-w), 84vw);
+    transform: translateX(-105%);
+    box-shadow: none;
+    z-index: 60;                        /* above .sidebar-veil (55) */
+    overscroll-behavior: contain;       /* drawer scroll never chains to the page */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .sidebar.is-open {
+    transform: translateX(0);
+    box-shadow: 20px 0 50px rgba(4, 33, 29, .35);
+  }
+
+  .topbar { padding: 0 16px; gap: 12px; }
+  .topbar__burger { display: grid; flex: none; }
+
+  /* Let the search shrink instead of pushing icons off-screen */
+  .topbar__search { max-width: none; min-width: 0; flex: 1 1 120px; }
+  .topbar__search input { min-width: 0; }
+
+  .content { padding: 22px 18px 36px; }
+
+  /* Two-panel layouts stack */
+  .settings-grid { grid-template-columns: 1fr; }
+  .chart-grid--three { grid-template-columns: 1fr; }
+}
+
+/* ---------- ≤ 760px : large phones ----------------------------------------- */
+@media (max-width: 760px) {
+  .content { padding: 18px 14px 34px; gap: 16px; }
+
+  .topbar { height: 64px; }
+  .topbar__clock { display: none; }
+  .topbar__spacer { display: none; }      /* search takes the freed space */
+
+  .view-head { flex-direction: column; align-items: stretch; gap: 12px; }
+  .view-head h1 { font-size: 21px; }
+  .view-head .actions { width: 100%; }
+  .view-head .actions .btn { flex: 1; }
+
+  .panel { padding: 18px 16px; }
+  .panel > h3 { flex-wrap: wrap; }
+  .chart-grid { gap: 14px; }
+  .chart-box { height: 220px; }
+
+  .stat { padding: 16px; }
+  .stat b { font-size: 22px; }
+  .stat__ico { width: 38px; height: 38px; margin-bottom: 11px; }
+
+  /* Prescription builder rows stack; Add button goes full width */
+  .rx-row { grid-template-columns: 1fr; }
+  .rx-row .btn { width: 100%; }
+
+  /* List items: text keeps its row, actions wrap underneath when tight */
+  .list-item { flex-wrap: wrap; gap: 12px; }
+  .list-item .body { flex: 1 1 180px; }
+  .list-item .row-actions { flex-wrap: wrap; gap: 6px; }
+
+  /* Key-value and preference rows never overflow */
+  .pref-row { flex-wrap: wrap; row-gap: 6px; }
+  .kv { flex-wrap: wrap; }
+
+  .table-tools { flex-direction: column; }
+  .table-tools .topbar__search { max-width: none; }
+  .table-tools select { width: 100%; }
+
+  /* Wide tables scroll smoothly inside their panel */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+
+  /* iOS Safari zooms the page when a focused control is under 16px —
+     bump form controls to 16px on touch widths so focus doesn't jump */
+  .field input, .field select, .field textarea,
+  .table-tools select, .topbar__search input { font-size: 16px; }
+}
+
+/* ---------- ≤ 560px : phones ------------------------------------------------ */
+@media (max-width: 560px) {
+  .topbar { padding: 0 12px; gap: 8px; }
+
+  /* Keep the avatar, drop the "Logged in as" text */
+  .topbar__profile { border: 0; padding: 0; }
+  .topbar__profile > span:not(.avatar) { display: none; }
+
+  .stat-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+
+  .form-2col { grid-template-columns: 1fr; }
+
+  .table th { padding: 9px 10px; font-size: 10.5px; }
+  .table td { padding: 11px 10px; font-size: 13.5px; }
+  .row-actions { gap: 6px; }
+  .row-actions .btn--sm { padding: 7px 11px; font-size: 12.5px; }
+
+  /* On very narrow lists, actions sit on their own line */
+  .list-item .row-actions { width: 100%; justify-content: flex-start; }
+  .list-item .ico { width: 38px; height: 38px; }
+
+  .modal { padding: 14px; }
+  .modal__card { padding: 22px 18px; }
+  .modal__foot { flex-wrap: wrap; }
+  .modal__foot .btn { flex: 1 1 auto; }
+
+  .chart-box { height: 200px; }
+}
+
+/* ---------- ≤ 380px : fold devices ------------------------------------------ */
+@media (max-width: 380px) {
+  .content { padding: 14px 10px 30px; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .view-head h1 { font-size: 19px; }
+  .sidebar { width: 88vw; }
+}
+
+
+/* ==========================================================================
+   PART C — Auth screen
+   ========================================================================== */
+
+@media (max-width: 920px) {
+  .auth { grid-template-columns: 1fr; min-height: 100svh; }
+  .auth__scene {
+    min-height: 0;
+    padding: 30px 24px 34px;
+    justify-content: flex-end;
+  }
+  .auth__scene h1 { font-size: clamp(22px, 5.5vw, 30px); margin: 14px 0 8px; max-width: none; }
+  .auth__scene > p { max-width: none; font-size: 14px; }
+  .auth__art, .auth__icon { display: none; }   /* decorative — declutters small screens */
+  .auth__shape--1 { width: 220px; height: 220px; }
+  .auth__shape--2 { display: none; }
+
+  .auth__panel { padding: 34px 20px 44px; align-items: start; }
+}
+
+@media (max-width: 760px) {
+  .auth__form input, .auth__form select { font-size: 16px; }   /* no iOS focus zoom */
+}
+
+@media (max-width: 560px) {
+  .auth__card { padding: 28px 20px; }
+  .auth__card .logo-img { height: 48px; margin-bottom: 20px; }
+  .auth__card h2 { font-size: 23px; }
+  .auth__scene { padding: 24px 18px 28px; }
+}
+
+@media (max-width: 380px) {
+  .role-picker { grid-template-columns: 1fr; }
+  .auth__panel { padding: 26px 12px 36px; }
+}
+
+
+/* ==========================================================================
+   PART D — Shared fixes
+   ========================================================================== */
+
+/* Token referenced by dashboard.css but never defined */
+:root { --line: var(--border); }
+
+/* Scroll lock while the drawer or a modal is open (toggled by common.js) */
+body.no-scroll { overflow: hidden; }
+
+/* Keyframes referenced by stylee.css but missing from animations.css */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes draw-ring {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
 }
