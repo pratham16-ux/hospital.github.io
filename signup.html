@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In — Stackly Hospital &amp; Clinic Portal</title>
-  <meta name="description" content="Sign in to the Stackly Hospital patient and doctor portal to manage appointments, records, prescriptions and billing.">
+  <title>Create Account — Stackly Hospital &amp; Clinic Portal</title>
+  <meta name="description" content="Create your Stackly Hospital portal account to book appointments, view reports, manage prescriptions and pay bills online.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -55,44 +55,54 @@
       </svg>
 
       <span class="auth__badge">Stackly Care Portal · 24×7</span>
-      <h1>Healthcare that follows you home.</h1>
-      <p>Appointments, reports, prescriptions and billing — one secure portal for patients and doctors of Stackly Hospital, Bengaluru.</p>
+      <h1>Your health record, one signup away.</h1>
+      <p>Create a free account to book appointments, track reports, manage prescriptions and settle bills — all from one secure portal.</p>
     </section>
 
-    <!-- ============ Right: login card ============ -->
+    <!-- ============ Right: signup card ============ -->
     <section class="auth__panel">
-      <div class="auth__card" data-reveal="scale"><a href="index.html">
+      <div class="auth__card" data-reveal="scale">
         <img class="logo-img"
              src="https://wsrv.nl/?url=https://snabsolutions.in/wp-content/uploads/2026/02/stackly-snab-solutions.png&w=260&h=104&output=webp&q=80&fit=inside"
-             alt="Stackly — SNAB Solutions" width="260" height="104"></a>
+             alt="Stackly — SNAB Solutions" width="260" height="104">
 
-        <h2>Welcome Back</h2>
-        <p class="sub">Sign in to continue</p>
+        <h2>Create Account</h2>
+        <p class="sub">Join the Stackly Care Portal</p>
 
-        <form class="auth__form" id="loginForm" novalidate>
+        <form class="auth__form" id="signupForm" novalidate>
           <div class="field">
-            <label for="loginEmail">Email address</label>
-            <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email">
+            <label for="suName">Full name</label>
+            <input type="text" id="suName" placeholder="e.g. Ramesh Kumar" maxlength="16" autocomplete="name">
             <span class="field-error" role="alert"></span>
           </div>
 
           <div class="field">
-            <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword" placeholder="Minimum 8 characters" autocomplete="current-password">
+            <label for="suEmail">Email address</label>
+            <input type="email" id="suEmail" placeholder="you@example.com" autocomplete="email">
             <span class="field-error" role="alert"></span>
           </div>
 
-          <div class="auth__row">
-            <label class="check">
-              <input type="checkbox" id="rememberMe" >
-              Remember me
-            </label>
-            <a href="404.html" id="forgotLink">Forgot password?</a>
+          <div class="field">
+            <label for="suPhone">Mobile number</label>
+            <input type="tel" id="suPhone" placeholder="10-digit mobile" maxlength="10" inputmode="numeric" autocomplete="tel-national">
+            <span class="field-error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="suPassword">Password</label>
+            <input type="password" id="suPassword" placeholder="Min. 8 characters, letters + numbers" autocomplete="new-password">
+            <span class="field-error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="suConfirm">Confirm password</label>
+            <input type="password" id="suConfirm" placeholder="Re-enter your password" autocomplete="new-password">
+            <span class="field-error" role="alert"></span>
           </div>
 
           <!-- Role selection — exactly one card can be active -->
           <div class="field">
-            <label id="roleLabel">Sign in as</label>
+            <label id="roleLabel">Register as</label>
             <div class="role-picker" role="radiogroup" aria-labelledby="roleLabel">
               <button class="role-card" type="button" data-role="doctor" role="radio" aria-checked="false">
                 <span class="emoji" aria-hidden="true">👨‍⚕️</span>
@@ -108,28 +118,31 @@
             <span class="field-error" id="roleError" role="alert"></span>
           </div>
 
+          <div class="auth__row">
+            <label class="check">
+              <input type="checkbox" id="termsCheck">
+              I agree to the Terms &amp; Privacy Policy
+            </label>
+          </div>
+          <span class="field-error" id="termsError" role="alert"></span>
+
           <div class="auth__actions">
-            <button class="btn btn--primary" type="submit" id="signInBtn">
-              <span class="btn__label">Sign In</span>
+            <button class="btn btn--primary" type="submit" id="createBtn">
+              <span class="btn__label">Create New Account</span>
             </button>
-
-      <div class=""> <center> New to Stackly? <a href="signup.html" class="link-accent">Create a free account →</a>
-      </div></center>
-
-
-            <a class="btn btn--ghost" href="index.html" id="backHome">Back to Home</a>
+            <a class="btn btn--ghost" href="login.html" id="gotoLogin">Sign In Instead</a>
           </div>
         </form>
 
         <!-- Success overlay -->
-        <div class="auth__success" id="loginSuccess" aria-live="polite">
+        <div class="auth__success" id="signupSuccess" aria-live="polite">
           <div>
             <svg class="ring" viewBox="0 0 76 76" aria-hidden="true">
               <circle cx="38" cy="38" r="34"/>
               <path d="M24 39l10 10 18-20"/>
             </svg>
-            <b>Signed in!</b>
-            <small id="successNote">Taking you to your dashboard…</small>
+            <b>Account created!</b>
+            <small id="successNote">Taking you to the sign-in page…</small>
           </div>
         </div>
       </div>
@@ -137,6 +150,6 @@
   </main>
 
   <script src="js/common.js" defer></script>
-  <script src="js/login.js" defer></script>
+  <script src="js/signup.js" defer></script>
 </body>
 </html>

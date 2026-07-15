@@ -61,7 +61,8 @@
 
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
   .gallery-grid figure:nth-child(1) { grid-column: span 2; }
-  .gallery-grid figure:nth-child(4) { grid-row: span 1; }
+  .gallery-grid figure:nth-child(5),
+  .gallery-grid figure:nth-child(6) { grid-column: span 2; }
 
   /* Timeline flattens to a single left rail */
   .timeline::before { left: 8px; }
@@ -143,7 +144,7 @@
   .float-card--rating { bottom: 70px; }
 
   .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 210px; }
-  .gallery-grid figure:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+  .gallery-grid figure:nth-child(n) { grid-column: span 1; grid-row: span 1; }
 
   .counters { grid-template-columns: 1fr; }
   .counter { padding-left: 18px; }
@@ -229,6 +230,9 @@
 
   .topbar { padding: 0 16px; gap: 12px; }
   .topbar__burger { display: grid; flex: none; }
+
+  /* Tall dialogs scroll inside the card instead of under the keyboard */
+  .modal__card { max-height: 92dvh; overflow-y: auto; }
 
   /* Let the search shrink instead of pushing icons off-screen */
   .topbar__search { max-width: none; min-width: 0; flex: 1 1 120px; }
