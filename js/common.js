@@ -11,7 +11,9 @@
    · Reveal  → .is-inview on [data-reveal] and .stagger (animations.css)
    · Drawer  → .sidebar.is-open + .sidebar-veil.is-visible (responsive.css)
    ========================================================================== */
+(() => {
 "use strict";
+console.info("%cStackly common.js v2 (IIFE + window exports) loaded", "color:#0E7490;font-weight:bold");
 
 /* --------------------------------------------------------------------------
    0. Config
@@ -400,3 +402,17 @@ function downloadFile(filename, content, mime = "text/plain") {
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+/* --------------------------------------------------------------------------
+   Public API — everything login.js / signup.js / patient.js / doctor.js use.
+   Assigned to window (not top-level const) so this file can coexist with
+   script.js / animations.js on the same page without identifier collisions.
+   -------------------------------------------------------------------------- */
+Object.assign(window, {
+  $, $$, escapeHtml, cssVar, fmtINR, prefersReducedMotion,
+  Session, requireRole,
+  applyTheme, toggleTheme,
+  setView, initRouter, openSidebar, closeSidebar,
+  openModal, closeModal, showToast,
+  initCounters, downloadFile,
+});
+})();

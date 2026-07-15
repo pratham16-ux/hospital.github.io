@@ -4,7 +4,9 @@
    image tilt, hero parallax, page transitions.
    Kept separate from script.js so behaviour and motion stay decoupled.
    ========================================================================== */
+(() => {
 "use strict";
+console.info("%cStackly animations.js v2 (IIFE) loaded", "color:#0E7490;font-weight:bold");
 
 const PREFERS_REDUCED_MOTION = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
@@ -180,6 +182,9 @@ function initPageTransitions() {
     const link = e.target.closest("a[href]");
     if (!link) return;
 
+    // Links that open in-page UI are not navigations
+    if (link.hasAttribute("data-open-appointment") || link.hasAttribute("data-close-modal")) return;
+
     const href = link.getAttribute("href");
     const isInternalPage =
       href &&
@@ -212,3 +217,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeroParallax();
   initPageTransitions();
 });
+})();

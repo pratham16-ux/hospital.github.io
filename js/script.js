@@ -4,7 +4,9 @@
    doctor search & filters, testimonial slider, toast system.
    Author: Stackly Frontend Team (SNAB Solutions)
    ========================================================================== */
+(() => {
 "use strict";
+console.info("%cStackly script.js v2 (IIFE) loaded", "color:#0E7490;font-weight:bold");
 
 /* Tiny query helpers ------------------------------------------------------ */
 const $  = (sel, ctx = document) => ctx.querySelector(sel);
@@ -117,12 +119,16 @@ function initModal() {
     document.body.style.overflow = "";
   };
 
-  $$("[data-open-appointment]").forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      open();
-    })
-  );
+  // Delegated + capture-phase: fires before any other click handler
+  // (including the page-transition veil in animations.js) and also covers
+  // triggers rendered after load.
+  document.addEventListener("click", (e) => {
+    const trigger = e.target.closest("[data-open-appointment]");
+    if (!trigger) return;
+    e.preventDefault();
+    e.stopPropagation();
+    open();
+  }, true);
 
   $$("[data-close-modal]", modal).forEach((btn) =>
     btn.addEventListener("click", close)
@@ -459,3 +465,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initBackToTop();
   initLightbox();
 });
+})();
